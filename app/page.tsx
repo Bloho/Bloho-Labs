@@ -1,0 +1,6 @@
+import Link from 'next/link';
+export const title = 'Gravitational Transport Robustness in the Earth–Moon CR3BP';
+export const description = 'Exploring the stability of gravitational transport in the Earth–Moon system, and how orbital pathways respond to perturbations in the circular restricted three-body problem.';
+export function Tags(){return <div className="tags"><span>Research</span><span>Research in progress</span></div>}
+export function PaperCard(){return <Link className="paper-card" href="/papers/gravitational-transport"><Tags/><h2>{title}</h2><p>{description}</p></Link>}
+export default function Home(){return <><section className="featured"><Link href="/papers/gravitational-transport" aria-label={`Read ${title}`} className="hero-media"><video autoPlay muted loop playsInline poster="/assets/research-poster.jpg"><source src="/assets/research.mp4" type="video/mp4"/></video></Link><PaperCard/></section><section className="related" aria-label="More research">{[0,1,2].map(i=><Link href="/papers/fin-geometry" className="mini-paper" key={i}><div className="thumbnail" aria-hidden="true"/><div><div className="tags"><span>Research</span></div><h2>Parametric Analysis of Fin Geometry Effects on Stability and Performance of a Model Rocket</h2></div></Link>)}</section><div className="home-space"/></>}
