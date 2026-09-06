@@ -111,7 +111,8 @@ vec3 cyc(float t) {
 }
 
 void main() {
-  vec2 frag = gl_FragCoord.xy / uRes;
+  // Zoom the scene 25% inside the unchanged hero boundary, cropping the top focal point.
+  vec2 frag = (gl_FragCoord.xy / uRes - 0.5) / 1.25 + 0.5;
   float v = 1.0 - frag.y;                    // 0 top, 1 bottom
   float aspect = uRes.x / uRes.y;
   // x in screen-height units: the reference clip is portrait, and normalising
