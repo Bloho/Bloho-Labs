@@ -7,8 +7,8 @@ export type Block = { type: 'paragraph' | 'heading' | 'quote'; text: string };
 export type Entry = {
   kind: Kind; slug: string; title: string; summary: string; author: string;
   date: string; status: string; fund: string; thumbnail: string | null;
-  orcid: string | null; vixra: string | null; externalUrl: string | null;
-  body: Block[]; featured: boolean;
+  orcid: string | null; zenodo: string | null; vixra: string | null; externalUrl: string | null;
+  body: Block[]; order: number;
 };
 export type Issue = { file: string; message: string };
 export type Catalog = { entries: Entry[]; issues: Issue[] };
@@ -25,6 +25,8 @@ export function safeUrl(value: unknown, host?: string): string | null {
   } catch { return null; }
 }
 function imagePath(value: unknown, publicRoot: string): string | null {
+  const remote = safeUrl(value);
+  if (remote) return remote;
   if (typeof value !== 'string' || !/^\/[a-zA-Z0-9/_ .-]+\.(png|jpe?g|webp|avif|gif)$/i.test(value) || value.includes('..')) return null;
   try { return fs.statSync(/* turbopackIgnore: true */ path.join(/* turbopackIgnore: true */ publicRoot, value)).isFile() ? value : null; } catch { return null; }
 }
@@ -70,15 +72,18 @@ export function loadContent(root = path.join(process.cwd(), 'content'), publicRo
         if (kind === 'blogs' && body.length === 0) { issue('Blog needs at least one valid body block; skipped.'); continue; }
         const thumbnail = imagePath(raw.thumbnail, publicRoot);
         if (raw.thumbnail && !thumbnail) issue('Thumbnail missing or invalid; neutral cover used.');
-        const orcid = safeUrl(raw.orcid, 'orcid.org'), vixra = safeUrl(raw.vixra, 'vixra.org');
+        const orcid = safeUrl(raw.orcid, 'orcid.org');
+        const zenodo = safeUrl(raw.zenodo, 'zenodo.org');
+        const vixra = safeUrl(raw.vixra, 'vixra.org');
         if (raw.orcid && !orcid) issue('Invalid ORCID link omitted.');
+        if (raw.zenodo && !zenodo) issue('Invalid Zenodo link omitted.');
         if (raw.vixra && !vixra) issue('Invalid viXra link omitted.');
         entries.push({ kind, slug, title, summary, author, date, externalUrl, body, thumbnail, orcid, vixra,
-          status: text(raw.status, 80), fund: text(raw.fund, 160), featured: raw.featured === true });
+          zenodo, status: text(raw.status, 80), fund: text(raw.fund, 160), order: typeof raw.order === 'number' && Number.isFinite(raw.order) ? raw.order : 0 });
       } catch { issue('Invalid JSON or unreadable file; entry skipped.'); }
     }
   }
-  entries.sort((a,b) => Date.parse(b.date) - Date.parse(a.date) || a.slug.localeCompare(b.slug));
+  entries.sort((a,b) => Date.parse(b.date) - Date.parse(a.date) || b.order - a.order || a.slug.localeCompare(b.slug));
   return { entries, issues };
 }
 export function getEntries(kind?: Kind): Entry[] { return loadContent().entries.filter(entry => !kind || entry.kind === kind); }
@@ -86,4 +91,19 @@ export function getEntry(kind: Kind, slug: string): Entry | undefined { return g
 export function entryHref(entry: Entry): string { return `/${entry.kind}/${entry.slug}`; }
 export function formatDate(date: string, withTime = false): string {
   return new Intl.DateTimeFormat('en-GB', { day:'numeric', month:'short', year:'numeric', timeZone:'Asia/Kolkata', ...(withTime ? { hour:'numeric',minute:'2-digit',hour12:true } : {}) }).format(new Date(date)) + (withTime ? ' IST' : '');
+}
+
+// Hero is an explicit content identifier. New publications never replace it.
+export function selectHomepage(entries: Entry[], heroId: unknown) {
+  const sorted = [...entries].sort((a,b) => Date.parse(b.date) - Date.parse(a.date) || b.order - a.order || a.slug.localeCompare(b.slug));
+  const hero = typeof heroId === 'string' ? sorted.find(entry => `${entry.kind}/${entry.slug}` === heroId) : undefined;
+  return { hero, latest: sorted.filter(entry => entry !== hero).slice(0, 3) };
+}
+export function getHomepage() {
+  let hero: unknown;
+  try {
+    const data: unknown = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'content/homepage.json'), 'utf8'));
+    if (object(data)) hero = data.hero;
+  } catch { /* Missing or malformed settings hide the hero card without affecting latest entries. */ }
+  return selectHomepage(getEntries(), hero);
 }

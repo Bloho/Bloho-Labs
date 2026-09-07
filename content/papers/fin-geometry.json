@@ -1,13 +1,13 @@
 {
   "draft": false,
   "title": "Parametric Analysis of Fin Geometry Effects on Stability and Performance of a Model Rocket",
-  "summary": "Parametric analysis of how fin geometry affects the stability and performance of a model rocket.",
+  "summary": "A simulation study of how fin geometry affects rocket stability and flight performance, identifying tradeoffs between stability margin and aerodynamic losses.",
   "author": "Ayush Samanta",
-  "date": "2026-09-07",
+  "date": "2026-04-28",
   "thumbnail": null,
-  "status": "Research in progress",
+  "status": "Preprint",
   "fund": "Bloho Labs",
   "orcid": null,
-  "vixra": null,
-  "featured": false
+  "zenodo": null,
+  "vixra": "https://vixra.org/abs/2604.0112"
 }

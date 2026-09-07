@@ -1,0 +1,14 @@
+{
+  "draft": false,
+  "title": "Probabilistic Estimation of the Critical Density Threshold for Kessler Syndrome in Low Earth Orbit Using a Two-Shell Monte Carlo Model",
+  "summary": "This preprint models active satellites, defunct spacecraft, and debris across two representative Low Earth Orbit shells to estimate the probabilistic density threshold at which a collisional cascade becomes likely.",
+  "author": "Ayush Samanta",
+  "date": "2026-06-26",
+  "thumbnail": "https://zenodo.org/api/iiif/record:22638541:Kessler%20Syndrome%20Density%20Threshold%20(1).pdf/full/%5E1200,/0/default.jpg",
+  "status": "Preprint",
+  "fund": "Bloho Labs",
+  "orcid": "https://orcid.org/0009-0003-4601-714X",
+  "zenodo": "https://zenodo.org/records/22638541",
+  "vixra": null,
+  "order": 0
+}

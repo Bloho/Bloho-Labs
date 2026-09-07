@@ -23,7 +23,7 @@ test('drafts and copyable templates never publish, and filenames supply unique s
 });
 test('missing assets and invalid optional fields fall back safely',t=>{
  const {write,load}=fixture(t);write('papers','good.json',{...valid,thumbnail:'/missing.png',orcid:'javascript:alert(1)',vixra:'https://evil.test/',fund:{bad:true},status:[]});
- const entry=load().entries[0];assert.ok(entry);assert.equal(entry.thumbnail,null);assert.equal(entry.orcid,null);assert.equal(entry.vixra,null);assert.equal(entry.fund,'');
+ const entry=load().entries[0];assert.ok(entry);assert.equal(entry.thumbnail,null);assert.equal(entry.orcid,null);assert.equal(entry.zenodo,null);assert.equal(entry.vixra,null);assert.equal(entry.fund,'');
 });
 test('bad body blocks are isolated, and a body with no valid blocks is skipped',t=>{
  const {write,load}=fixture(t);write('blogs','good.json',{...valid,body:[null,{type:'paragraph',text:'<script>alert(1)</script>'},{type:'html',text:'unsafe'}]});write('blogs','bad.json',{...valid,body:[42]});
@@ -35,4 +35,23 @@ test('external destinations must be HTTPS, and invalid dates are skipped',t=>{
 });
 test('missing collections and unsafe filenames cannot crash the catalog',t=>{
  const {root,write,load}=fixture(t);fs.rmSync(path.join(root,'blogs'),{recursive:true});write('papers','Bad Name.json',valid);write('papers','valid.json',valid);assert.equal(load().entries.length,1);assert.equal(load().issues.length,2);
+});
+test('Zenodo links accept only the official HTTPS domain',t=>{
+ const {write,load}=fixture(t);write('papers','valid.json',{...valid,zenodo:'https://zenodo.org/records/22648743'});write('papers','invalid.json',{...valid,zenodo:'https://zenodo.org.evil.test/records/1'});
+ const result=load();const entry=result.entries.find(item=>item.slug==='valid');assert.equal(entry?.zenodo,'https://zenodo.org/records/22648743');assert.equal(result.entries.length,2);assert.ok(result.issues.some(issue=>issue.file==='papers/invalid.json'));
+});
+
+test('homepage hero stays manual while newest content across collections fills three slots', async t => {
+ const {selectHomepage} = await import('../lib/content.ts');
+ const {write,load}=fixture(t);
+ write('papers','hero.json',{...valid,date:'2026-09-01'});
+ for (const slug of ['1011','1012','1013']) write('articles',slug+'.json',{...valid,date:'2026-09-08',externalUrl:'https://example.com/'+slug,order:Number(slug),thumbnail:'https://example.com/thumb.png'});
+ let selection=selectHomepage(load().entries,'papers/hero');
+ assert.equal(selection.hero.slug,'hero');assert.deepEqual(selection.latest.map(x=>x.slug),['1013','1012','1011']);
+ assert.equal(selection.latest[0].thumbnail,'https://example.com/thumb.png');
+ write('blogs','newest.json',{...valid,date:'2026-09-09',body:[{type:'paragraph',text:'New post'}]});
+ selection=selectHomepage(load().entries,'papers/hero');assert.deepEqual(selection.latest.map(x=>x.slug),['newest','1013','1012']);assert.equal(selection.hero.slug,'hero');
+ selection=selectHomepage(load().entries,'blogs/newest');assert.deepEqual(selection.latest.map(x=>x.slug),['1013','1012','1011']);
+ assert.equal(selectHomepage(load().entries,'papers/missing').hero,undefined);
+ assert.equal(selectHomepage([],null).latest.length,0);
 });

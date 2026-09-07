@@ -16,10 +16,9 @@ The three collections are independent:
    numbers, and hyphens. The filename becomes its unique URL; no separate slug
    field is needed. Templates beginning with `_` are always ignored.
 3. Fill in `title`, `summary`, `author`, and `date`. Keep `draft: true` while editing.
-4. For a paper, set its research `status`, optional `fund`, ORCID profile URL and
-   viXra paper URL. Set unknown values to `null` or an empty string. Only papers
-   get the **Research** pill. Set `featured: true` to prefer it on the homepage;
-   if several are featured, the newest wins.
+4. For a paper, set its research `status`, optional `fund`, ORCID profile URL,
+   Zenodo record URL, and viXra paper URL. Set unknown values to `null` or an empty string. Only papers
+   get the **Research** pill. Choose the homepage hero in `content/homepage.json`.
 5. For a research article, replace `externalUrl` with the actual HTTPS URL of
    that article on your other website. There is no embedded copy of that site.
 6. For a blog, fill `body` with paragraph, heading, or quote blocks. Each block
@@ -27,6 +26,8 @@ The three collections are independent:
    is plain text, not executable HTML, Markdown, MDX, or JavaScript.
 7. Optional thumbnail: put an image in `public/uploads/`, then set `thumbnail`
    to `/uploads/your-image.webp`. PNG, JPEG, WebP, AVIF, and GIF are supported.
+   You can also set `thumbnail` to an HTTPS image URL. Remote images load directly
+   in the visitor’s browser; unavailable images fall back without breaking the page.
    Use a wide image around 1222 × 482 for the supplied layouts. Missing images
    leave a neutral white cover of exactly the same height.
 8. Set `draft: false`, then run `npm run content:check`.
@@ -75,5 +76,36 @@ break a deployment. Keep content in Git so mistakes can be restored.
 
 `/research` remains the existing papers index; `/papers` is also supported.
 `/articles` lists external research articles and `/blogs` lists general blogs.
-The existing two paper URLs are preserved. External article and blog collections
-start empty because no real external URLs or blog text have been supplied.
+The existing two paper URLs are preserved. The external articles 1011, 1012, and 1013 are stored in `content/articles/`.
+The general blog collection remains available for locally authored posts.
+
+## Homepage selection and thumbnail changes
+
+`content/homepage.json` contains one explicit hero identifier:
+
+```json
+{ "hero": "papers/gravitational-transport" }
+```
+
+To select an external article use `"articles/1013"`; to select a local blog use
+`"blogs/your-filename"`. New entries do not change this selection. If the selected
+entry is a draft, missing, or invalid, the hero text card is hidden rather than
+silently choosing a different entry. The Light Rails visual remains in place.
+
+The three small cards always show the newest published entries across papers,
+external articles, and local blogs, excluding the selected hero. Sorting uses:
+
+1. `date`, newest first (include a timestamp to order posts precisely).
+2. `order`, highest first, for entries with the same date.
+3. Filename, for a stable final tie-breaker.
+
+The initial external articles use 2026-09-08 as their date added to this site,
+not a verified original publication date. Their `order` values are 1013, 1012,
+and 1011, setting that initial sequence. Replace dates with publication dates
+if preferred. A later-dated paper or article automatically displaces the oldest
+small card, unless it is manually selected as the hero.
+
+To change a thumbnail, edit `thumbnail` in the corresponding entry JSON, e.g.
+`content/articles/1013.json`. Use an HTTPS URL or `/uploads/my-image.webp` after
+placing the file under `public/uploads/`. The homepage cards use this same field.
+Commit and redeploy to update the live site.

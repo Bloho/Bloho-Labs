@@ -1,0 +1,10 @@
+{
+  "draft": false,
+  "title": "Hohmann vs Bi-Elliptic Transfers",
+  "summary": "Comparing Hohmann and bi-elliptic orbital transfers.",
+  "author": "Bloho Labs",
+  "date": "2026-09-08",
+  "thumbnail": "https://www.poliastro.space/images/gmat_bielliptic.png",
+  "externalUrl": "https://1012.bloho.space/",
+  "order": 1012
+}
