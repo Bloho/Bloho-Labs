@@ -1,12 +1,9 @@
 import Link from 'next/link';
+import { entryHref, type Entry } from '@/lib/content';
 
-export const title = 'Gravitational Transport Robustness in the Earth–Moon CR3BP';
-export const description = 'Exploring the stability of gravitational transport in the Earth–Moon system, and how orbital pathways respond to perturbations in the circular restricted three-body problem.';
-
-export function Tags() {
-  return <div className="tags"><span>Research</span><span>Research in progress</span></div>;
+export function Tags({ entry }: { entry: Entry }) {
+  return <div className="tags"><span>{entry.kind === 'papers' ? 'Research' : entry.kind === 'articles' ? 'Research article' : 'Blog'}</span>{entry.status && <span>{entry.status}</span>}</div>;
 }
-
-export function PaperCard() {
-  return <article className="paper-card"><Tags/><h2><Link className="publication-title" href="/papers/gravitational-transport">{title}</Link></h2><p>{description}</p></article>;
+export function PaperCard({ entry }: { entry: Entry }) {
+  return <article className="paper-card"><Tags entry={entry}/><h2><Link className="publication-title" href={entryHref(entry)} prefetch={entry.kind === 'articles' ? false : undefined}>{entry.title}</Link></h2><p>{entry.summary}</p></article>;
 }

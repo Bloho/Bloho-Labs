@@ -30,3 +30,8 @@ No `vercel.json`, SPA fallback rewrite, custom server, or Cloudflare adapter is
 needed. Next.js handles direct requests to `/articles`, `/research`, and the
 other App Router routes natively. The animation shader and fonts are served from
 `public/` by the same application.
+
+## Content publishing
+
+See [content/README.md](content/README.md) for copyable paper, external article,
+and blog templates, validation commands, and failure-isolation behavior.

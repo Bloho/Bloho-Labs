@@ -1,0 +1,22 @@
+{
+  "draft": true,
+  "title": "Your title",
+  "summary": "A short description of this entry.",
+  "author": "Bloho Labs",
+  "date": "2026-09-07T15:35:00+05:30",
+  "thumbnail": null,
+  "body": [
+    {
+      "type": "paragraph",
+      "text": "Write your opening paragraph here."
+    },
+    {
+      "type": "heading",
+      "text": "A section heading"
+    },
+    {
+      "type": "paragraph",
+      "text": "Continue your story here."
+    }
+  ]
+}

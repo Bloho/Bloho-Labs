@@ -48,5 +48,5 @@ export function Header() {
     };
   }, [path]);
 
-  return <header ref={headerRef} className="site-header"><div className="header-inner"><Link href="/" aria-label="Bloho Labs home"><Image src="/assets/labs.svg" alt="labs" width={127} height={42} unoptimized/></Link><nav aria-label="Main navigation"><Link href="/research" aria-current={path.startsWith('/research') ? 'page' : undefined}>Research</Link><Link href="/articles" aria-current={path.startsWith('/articles') ? 'page' : undefined}>Articles</Link></nav></div></header>;
+  return <header ref={headerRef} className="site-header"><div className="header-inner"><Link href="/" aria-label="Bloho Labs home"><Image src="/assets/labs.svg" alt="labs" width={127} height={42} unoptimized/></Link><nav aria-label="Main navigation"><Link href="/research" aria-current={(path.startsWith('/research') || path.startsWith('/papers')) ? 'page' : undefined}>Research</Link><Link href="/articles" aria-current={path.startsWith('/articles') ? 'page' : undefined}>Articles</Link><Link href="/blogs" aria-current={path.startsWith('/blogs') ? 'page' : undefined}>Blogs</Link></nav></div></header>;
 }

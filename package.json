@@ -10,7 +10,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "oxlint",
-    "format": "oxfmt"
+    "format": "oxfmt",
+    "content:check": "node --experimental-strip-types scripts/check-content.mjs",
+    "test:content": "node --experimental-strip-types --test tests/content.test.mjs",
+    "prebuild": "node --experimental-strip-types scripts/check-content.mjs --warn-only"
   },
   "dependencies": {
     "react": "19.2.6",

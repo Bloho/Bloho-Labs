@@ -1,3 +1,13 @@
-import { Tags,title } from '@/components/publication-card';
 import { notFound } from 'next/navigation';
-export default async function Paper({params}:{params:Promise<{slug:string}>}){const {slug}=await params;if(!['gravitational-transport','fin-geometry'].includes(slug))notFound();const rocket=slug==='fin-geometry';return <article><div className="detail-heading"><Tags/><h1>{rocket?'Parametric Analysis of Fin Geometry Effects on Stability and Performance of a Model Rocket':title}</h1></div>{rocket?<div className="prose-page"><h1>Research in progress</h1><p>Parametric analysis of how fin geometry affects the stability and performance of a model rocket.</p><p>The full paper will be available here when published.</p></div>:<div className="paper-view"><img src="/assets/paper-preview.png" alt="Paper excerpt: Probabilistic Estimation of the Critical Density Threshold for Kessler Syndrome in Low Earth Orbit Using a Two-Shell Monte Carlo Model. Ayush Samanta, Independent Research."/><p className="preview-note">Reference paper preview. The full manuscript is not yet available.</p></div>}</article>}
+import { getEntry } from '@/lib/content';
+import { PaperTemplate } from '@/components/content-templates';
+type Props = { params: Promise<{ slug: string }> };
+export async function generateMetadata({ params }: Props) {
+  const entry = getEntry('papers', (await params).slug);
+  return { title: entry ? `${entry.title} — Bloho Labs` : 'Paper not found — Bloho Labs', description: entry?.summary };
+}
+export default async function Paper({ params }: Props) {
+  const entry = getEntry('papers', (await params).slug);
+  if (!entry) notFound();
+  return <PaperTemplate entry={entry}/>;
+}
