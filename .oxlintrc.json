@@ -24,10 +24,8 @@
   },
   "ignorePatterns": [
     ".next/**",
-    ".vinext/**",
     "out/**",
     "build/**",
-    "dist/**",
     "coverage/**",
     "next-env.d.ts"
   ],
