@@ -62,11 +62,7 @@ html[data-theme=dark]{--background:#0a0a0a;--foreground:#ededed;--border:#2e2e2e
 .header-inner nav a,.paper-facts,.blog-heading time,.copyright,.collection-empty,.preview-note,.paper-detail-field dt{color:var(--secondary-text)}
 .header-inner nav a:hover,.header-inner nav a[aria-current=page],footer nav,.paper-facts .paper-author,.paper-details-right dt{color:var(--foreground)}
 .paper-links a{background:var(--button-surface);color:var(--foreground)}.paper-links a:hover{background:var(--button-hover)}
-.paper-links img{background:transparent;padding:0}
-.paper-links .repository-logo-dark{display:none}
-html[data-theme=dark] .repository-logo-light{display:none}
-html[data-theme=dark] .repository-logo-dark{display:block}
-@media(prefers-color-scheme:dark){html:not([data-theme=light]):not([data-theme=dark]) .repository-logo-light{display:none}html:not([data-theme=light]):not([data-theme=dark]) .repository-logo-dark{display:block}}
+.paper-links .repository-logo{display:block;width:70px;height:26px;object-fit:contain;background:transparent!important;padding:0}
 .publication-title:hover,.publication-title:focus-visible,.mini-paper h2:hover{color:var(--title-hover)}
 .paper-software dd{color:var(--link-color)}a:focus-visible,button:focus-visible{outline:2px solid var(--link-color);outline-offset:4px}
 .theme-control{display:flex;justify-content:center;margin:12px auto 20px;width:max-content}
