@@ -9,6 +9,8 @@ export type Entry = {
   date: string; status: string; fund: string; thumbnail: string | null;
   orcid: string | null; zenodo: string | null; vixra: string | null; externalUrl: string | null;
   body: Block[]; order: number;
+  details: { resourceType: string; publisher: string; languages: string; identifiers: string[]; rights: string; copyright: string };
+  software: { repositoryUrl: string | null; programmingLanguages: string; developmentStatus: string };
 };
 export type Issue = { file: string; message: string };
 export type Catalog = { entries: Entry[]; issues: Issue[] };
@@ -78,7 +80,26 @@ export function loadContent(root = path.join(process.cwd(), 'content'), publicRo
         if (raw.orcid && !orcid) issue('Invalid ORCID link omitted.');
         if (raw.zenodo && !zenodo) issue('Invalid Zenodo link omitted.');
         if (raw.vixra && !vixra) issue('Invalid viXra link omitted.');
-        entries.push({ kind, slug, title, summary, author, date, externalUrl, body, thumbnail, orcid, vixra,
+        const detailsRaw = object(raw.details) ? raw.details : {};
+        const softwareRaw = object(raw.software) ? raw.software : {};
+        if (raw.details != null && !object(raw.details)) issue('Invalid details omitted.');
+        if (raw.software != null && !object(raw.software)) issue('Invalid software details omitted.');
+        const optionalText = (source: Record<string, unknown>, key: string) => {
+          const result = text(source[key], 1000);
+          if (source[key] != null && source[key] !== '' && !result) issue(`Invalid ${key} omitted.`);
+          return result;
+        };
+        const identifiers = Array.isArray(detailsRaw.identifiers) ? detailsRaw.identifiers.slice(0, 20).flatMap(value => {
+          const identifier = text(value, 250);
+          if (!identifier) issue('Invalid identifier omitted.');
+          return identifier ? [identifier] : [];
+        }) : [];
+        if (detailsRaw.identifiers != null && !Array.isArray(detailsRaw.identifiers)) issue('Identifiers must be an array; omitted.');
+        const details = { resourceType: optionalText(detailsRaw, 'resourceType'), publisher: optionalText(detailsRaw, 'publisher'), languages: optionalText(detailsRaw, 'languages'), identifiers, rights: optionalText(detailsRaw, 'rights'), copyright: optionalText(detailsRaw, 'copyright') };
+        const repositoryUrl = safeUrl(softwareRaw.repositoryUrl);
+        if (softwareRaw.repositoryUrl && !repositoryUrl) issue('Invalid repository URL omitted.');
+        const software = { repositoryUrl, programmingLanguages: optionalText(softwareRaw, 'programmingLanguages'), developmentStatus: optionalText(softwareRaw, 'developmentStatus') };
+        entries.push({ kind, slug, title, summary, author, date, externalUrl, body, thumbnail, orcid, vixra, details, software,
           zenodo, status: text(raw.status, 80), fund: text(raw.fund, 160), order: typeof raw.order === 'number' && Number.isFinite(raw.order) ? raw.order : 0 });
       } catch { issue('Invalid JSON or unreadable file; entry skipped.'); }
     }

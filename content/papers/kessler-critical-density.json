@@ -10,5 +10,14 @@
   "orcid": "https://orcid.org/0009-0003-4601-714X",
   "zenodo": "https://zenodo.org/records/22638541",
   "vixra": null,
-  "order": 0
+  "order": 0,
+  "details": {
+    "resourceType": "Preprint",
+    "publisher": "",
+    "languages": "English",
+    "identifiers": ["10.5281/zenodo.22638541"],
+    "rights": "",
+    "copyright": ""
+  },
+  "software": { "repositoryUrl": null, "programmingLanguages": "", "developmentStatus": "" }
 }

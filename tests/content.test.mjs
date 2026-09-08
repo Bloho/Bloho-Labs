@@ -12,6 +12,15 @@ function fixture(t) {
   return { root, write, load: () => loadContent(root, root) };
 }
 const valid = { draft:false,title:'Good paper',summary:'A useful summary',author:'Author',date:'2026-09-07' };
+test('optional paper metadata isolates malformed fields and rejects unsafe repository links', t => {
+ const {write,load}=fixture(t);
+ write('papers','metadata.json',{...valid,details:{resourceType:'Preprint',publisher:42,identifiers:['10.5281/example',null,{}],rights:{bad:true}},software:{repositoryUrl:'javascript:alert(1)',programmingLanguages:'Python, TypeScript',developmentStatus:[]}});
+ write('papers','wrong-shape.json',{...valid,details:[],software:'bad'});
+ const result=load();assert.equal(result.entries.length,2);
+ const entry=result.entries.find(entry=>entry.slug==='metadata');
+ assert.equal(entry.details.resourceType,'Preprint');assert.equal(entry.details.publisher,'');assert.deepEqual(entry.details.identifiers,['10.5281/example']);assert.equal(entry.details.rights,'');
+ assert.equal(entry.software.repositoryUrl,null);assert.equal(entry.software.programmingLanguages,'Python, TypeScript');assert.equal(entry.software.developmentStatus,'');assert.ok(result.issues.length>=6);
+});
 test('malformed, oversized and invalid entries cannot remove a good sibling', t => {
  const {write,load} = fixture(t);
  write('papers','good.json',valid);write('papers','broken.json','{ "title":');write('papers','huge.json',' '.repeat(262145));write('papers','wrong.json',{...valid,title:42});write('papers','null.json','null');write('papers','array.json',[]);

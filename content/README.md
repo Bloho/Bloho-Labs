@@ -109,3 +109,27 @@ To change a thumbnail, edit `thumbnail` in the corresponding entry JSON, e.g.
 `content/articles/1013.json`. Use an HTTPS URL or `/uploads/my-image.webp` after
 placing the file under `public/uploads/`. The homepage cards use this same field.
 Commit and redeploy to update the live site.
+
+## Editing a research paper page
+
+The backend is file-based: edit `content/papers/<slug>.json`; there is no admin dashboard or database to update. All papers share `components/content-templates.tsx`, so you only edit data to publish or update a paper.
+
+| Visible detail | JSON field |
+| --- | --- |
+| Cover image | `thumbnail` (HTTPS URL or path under `public`, e.g. `/uploads/cover.webp`) |
+| Title / description | `title` / `summary` |
+| Second pill | `status` (the Research pill comes from the papers collection) |
+| Author / publication date / fund | `author` / `date` (ISO, e.g. `2026-09-07`) / `fund` |
+| Logo buttons | `zenodo`, `vixra`, `orcid` (official HTTPS record/profile URLs, or `null` to hide) |
+| Resource type / publisher / languages | `details.resourceType` / `details.publisher` / `details.languages` |
+| Identifiers | `details.identifiers` (array of strings, one displayed per line) |
+| Rights / copyright | `details.rights` / `details.copyright` |
+| Repository link | `software.repositoryUrl` (HTTPS URL, or `null`) |
+| Programming language | `software.programmingLanguages` (e.g. `Python, TypeScript`) |
+| Development status | `software.developmentStatus` (e.g. `Active`) |
+
+Copy the `details` and `software` objects from `_template.json` into an older paper if missing. Empty strings, empty identifier arrays, and null links hide their fields. Entire Additional details and Software sections hide when empty. Fill rights, copyright, publisher, and software information only when applicable to that specific paper; screenshot examples are not copied to unrelated records. Use `\n` within a string for intentional line breaks.
+
+Zenodo and viXra logos come from `public/utilities/zenodo-logo.svg` and `public/utilities/vixra-logo.svg`. Change those files to replace the shared logos. Link destinations remain independently editable for each paper.
+
+Run `npm run content:check` after editing. Invalid optional metadata is reported and omitted without dropping the paper. Invalid required fields or malformed JSON skip only that entry. Preview with `npm run dev`; rebuild/redeploy to apply edits to the production site. To add a paper, duplicate `_template.json` to a lowercase hyphenated filename, fill its fields, and set `draft` to `false`.

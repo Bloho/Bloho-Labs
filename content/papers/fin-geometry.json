@@ -9,5 +9,14 @@
   "fund": "Bloho Labs",
   "orcid": null,
   "zenodo": null,
-  "vixra": "https://vixra.org/abs/2604.0112"
+  "vixra": "https://vixra.org/abs/2604.0112",
+  "details": {
+    "resourceType": "Preprint",
+    "publisher": "",
+    "languages": "English",
+    "identifiers": ["viXra:2604.0112"],
+    "rights": "",
+    "copyright": ""
+  },
+  "software": { "repositoryUrl": null, "programmingLanguages": "", "developmentStatus": "" }
 }

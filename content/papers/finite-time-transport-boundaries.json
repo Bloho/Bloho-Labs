@@ -10,5 +10,18 @@
   "orcid": null,
   "zenodo": "https://zenodo.org/records/22648743",
   "vixra": null,
-  "order": 0
+  "order": 0,
+  "details": {
+    "resourceType": "Preprint",
+    "publisher": "",
+    "languages": "English",
+    "identifiers": ["10.5281/zenodo.22648743"],
+    "rights": "",
+    "copyright": ""
+  },
+  "software": {
+    "repositoryUrl": null,
+    "programmingLanguages": "",
+    "developmentStatus": ""
+  }
 }

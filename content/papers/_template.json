@@ -10,5 +10,18 @@
   "orcid": null,
   "zenodo": null,
   "vixra": null,
-  "order": 0
+  "order": 0,
+  "details": {
+    "resourceType": "Preprint",
+    "publisher": "Bloho Labs",
+    "languages": "English",
+    "identifiers": [],
+    "rights": "",
+    "copyright": ""
+  },
+  "software": {
+    "repositoryUrl": null,
+    "programmingLanguages": "",
+    "developmentStatus": ""
+  }
 }
