@@ -17,8 +17,8 @@ export function PaperTemplate({ entry }: { entry: Entry }) {
     <section className="paper-facts" aria-label="Publication details">
       <div><p className="paper-author">Author: {entry.author}</p><p>Date of publish: <time dateTime={entry.date}>{formatDate(entry.date)}</time></p>{entry.fund && <p>Fund: {entry.fund}</p>}</div>
       {(entry.orcid || entry.zenodo || entry.vixra) && <div className="paper-links">
-        {entry.zenodo && <a href={entry.zenodo} target="_blank" rel="noopener noreferrer">View on <Image src="/utilities/zenodo-logo.svg" alt="Zenodo" width={70} height={26}/></a>}
-        {entry.vixra && <a href={entry.vixra} target="_blank" rel="noopener noreferrer">View on <Image src="/utilities/vixra-logo.svg" alt="viXra" width={70} height={26}/></a>}
+        {entry.zenodo && <a href={entry.zenodo} target="_blank" rel="noopener noreferrer" aria-label="View on Zenodo">View on <Image className="repository-logo-light" src="/utilities/zenodo-black.svg" alt="" width={70} height={26}/><Image className="repository-logo-dark" src="/utilities/zenodo-white.svg" alt="" width={70} height={26}/></a>}
+        {entry.vixra && <a href={entry.vixra} target="_blank" rel="noopener noreferrer" aria-label="View on viXra">View on <Image className="repository-logo-light" src="/utilities/vixra-black.svg" alt="" width={70} height={26}/><Image className="repository-logo-dark" src="/utilities/vixra-white.svg" alt="" width={70} height={26}/></a>}
         {entry.orcid && <a href={entry.orcid} target="_blank" rel="noopener noreferrer">View on <span className="orcid-word">ORC<span>iD</span></span></a>}
       </div>}
     </section>

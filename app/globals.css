@@ -62,9 +62,39 @@ html[data-theme=dark]{--background:#0a0a0a;--foreground:#ededed;--border:#2e2e2e
 .header-inner nav a,.paper-facts,.blog-heading time,.copyright,.collection-empty,.preview-note,.paper-detail-field dt{color:var(--secondary-text)}
 .header-inner nav a:hover,.header-inner nav a[aria-current=page],footer nav,.paper-facts .paper-author,.paper-details-right dt{color:var(--foreground)}
 .paper-links a{background:var(--button-surface);color:var(--foreground)}.paper-links a:hover{background:var(--button-hover)}
-.paper-links img{background:#fff;border-radius:2px;padding:2px}
+.paper-links img{background:transparent;padding:0}
+.paper-links .repository-logo-dark{display:none}
+html[data-theme=dark] .repository-logo-light{display:none}
+html[data-theme=dark] .repository-logo-dark{display:block}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]):not([data-theme=dark]) .repository-logo-light{display:none}html:not([data-theme=light]):not([data-theme=dark]) .repository-logo-dark{display:block}}
 .publication-title:hover,.publication-title:focus-visible,.mini-paper h2:hover{color:var(--title-hover)}
 .paper-software dd{color:var(--link-color)}a:focus-visible,button:focus-visible{outline:2px solid var(--link-color);outline-offset:4px}
-.theme-control{display:flex;justify-content:center;gap:4px;margin:12px auto 20px;width:max-content;padding:4px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
-.theme-control button{background:transparent;color:var(--secondary-text);border:0;border-radius:4px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:36px}
-.theme-control button[aria-pressed=true]{background:var(--button-surface);color:var(--foreground)}.theme-control button:hover{color:var(--foreground)}
+.theme-control{display:flex;justify-content:center;margin:12px auto 20px;width:max-content}
+.theme-control .mode-toggle{position:relative;width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--foreground);cursor:pointer}
+.theme-control .mode-toggle:hover{background:var(--muted)}
+.mode-toggle svg{position:absolute;width:1.2rem;height:1.2rem;transition:transform 200ms ease}
+.theme-sun{transform:rotate(0) scale(1)}.theme-moon{transform:rotate(90deg) scale(0)}
+html[data-theme=dark] .theme-sun{transform:rotate(-90deg) scale(0)}html[data-theme=dark] .theme-moon{transform:rotate(0) scale(1)}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]):not([data-theme=dark]) .theme-sun{transform:rotate(-90deg) scale(0)}html:not([data-theme=light]):not([data-theme=dark]) .theme-moon{transform:rotate(0) scale(1)}}
+.theme-menu{background:var(--surface);color:var(--foreground);border:1px solid var(--border);box-shadow:none;outline:none;font-family:var(--font-utility);min-width:132px}
+.theme-menu [role=menuitemradio]{min-height:36px;cursor:pointer}
+.theme-menu [role=menuitemradio][data-highlighted],.theme-menu [role=menuitemradio]:focus{background:var(--muted)}
+@media(prefers-reduced-motion:reduce){.mode-toggle svg{transition:none}}
+.theme-control{margin:12px 24px 20px auto}
+.footer-brand a{display:block;width:397px;max-width:75vw;height:64px;background:#dcdcdc;mask:url('/assets/bloho-labs.svg') center / contain no-repeat;-webkit-mask:url('/assets/bloho-labs.svg') center / contain no-repeat}
+.footer-brand img{visibility:hidden}
+html[data-theme=dark] .footer-brand a{background:#242424}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]):not([data-theme=dark]) .footer-brand a{background:#242424}}
+@media(max-width:700px){.theme-control{margin-right:16px}}
+:root{--metadata-label:rgb(0 0 0 / 30%)}
+html[data-theme=dark]{--metadata-label:rgb(255 255 255 / 30%)}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]):not([data-theme=dark]){--metadata-label:rgb(255 255 255 / 30%)}}
+.paper-detail-field dt,.paper-details-right dt{color:var(--metadata-label)}
+
+/* Full-height separators with equal padding inside each publication cell. */
+.related{padding:0;gap:0;grid-template-columns:repeat(3,minmax(0,1fr))}
+.related .mini-paper{padding:16px;min-width:0;grid-template-columns:minmax(0,1fr);gap:20px;align-content:start}
+.related .mini-paper + .mini-paper{border-left:2px solid var(--border)}
+.related .thumbnail{width:100%;height:auto;aspect-ratio:1.46}
+.related .mini-paper h2{font-size:16px;font-weight:700;line-height:1.25}
+@media(max-width:700px){.related{grid-template-columns:1fr}.related .mini-paper + .mini-paper{border-left:0;border-top:2px solid var(--border)}}

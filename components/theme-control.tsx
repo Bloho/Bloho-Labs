@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '@/components/ui/dropdown-menu';
 
 type Theme = 'light' | 'dark' | 'system';
 const valid = (value: string | null): Theme => value === 'light' || value === 'dark' ? value : 'system';
@@ -19,11 +22,25 @@ export function ThemeControl() {
     window.addEventListener('storage', sync);
     return () => window.removeEventListener('storage', sync);
   }, []);
-  return <div className="theme-control" role="group" aria-label="Color theme">
-    {(['light', 'dark', 'system'] as const).map(option => <button key={option} type="button" aria-pressed={theme === option} onClick={() => {
-      setTheme(option);
-      document.documentElement.dataset.theme = option;
-      try { localStorage.setItem('bloho-theme', option); } catch { /* Session theme still works if storage is blocked. */ }
-    }}>{option[0].toUpperCase() + option.slice(1)}</button>)}
+  return <div className="theme-control">
+    <DropdownMenu>
+      <DropdownMenuTrigger render={<Button variant="outline" size="icon" className="mode-toggle" aria-label="Toggle theme"/>}>
+        <Sun className="theme-sun" aria-hidden="true"/>
+        <Moon className="theme-moon" aria-hidden="true"/>
+        <span className="sr-only">Toggle theme</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="theme-menu">
+        <DropdownMenuRadioGroup value={theme} onValueChange={value => {
+          const next = valid(value);
+          setTheme(next);
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem('bloho-theme', next); } catch { /* Session theme still works if storage is blocked. */ }
+        }}>
+          <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   </div>;
 }

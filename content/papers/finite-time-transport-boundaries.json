@@ -15,7 +15,10 @@
     "resourceType": "Preprint",
     "publisher": "",
     "languages": "English",
-    "identifiers": ["10.5281/zenodo.22648743"],
+    "identifiers": [
+      "10.5281/zenodo.22648743",
+      "viXra:2609.0014"
+    ],
     "rights": "Creative Commons Attribution 4.0 International",
     "copyright": "© 2026 Ayush Samanta. Published by Bloho Labs"
   },
