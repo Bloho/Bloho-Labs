@@ -1,7 +1,7 @@
 {
   "draft": false,
   "title": "Probabilistic Estimation of the Critical Density Threshold for Kessler Syndrome in Low Earth Orbit Using a Two-Shell Monte Carlo Model",
-  "summary": "This preprint models active satellites, defunct spacecraft, and debris across two representative Low Earth Orbit shells to estimate the probabilistic density threshold at which a collisional cascade becomes likely.",
+  "summary": "Orbital debris has become one of the most significant challenges facing the long-term sustainability of Low Earth Orbit (LEO). As the number of satellites continues to increase, so does the likelihood of collisions capable of generating large quantities of debris, potentially triggering a self-sustaining chain reaction known as Kessler Syndrome. This study develops a stochastic two-shell Monte Carlo model to investigate whether a critical orbital density exists beyond which such debris cascades become increasingly likely. The model represents the orbital environment using two concentric shells and incorporates stochastic collisions, debris fragmentation, atmospheric decay, active satellite failure, and collision avoidance. A systematic density sweep was performed using 200 independent Monte Carlo simulations for each normalized orbital density. The results reveal a rapid transition from stable orbital evolution to near-certain cascade formation over a narrow range of densities, with the critical normalized density multiplier estimated to be approximately $alpha_c approx 0.093$. Near this threshold, simulations with identical initial conditions frequently produced different long-term outcomes, highlighting the importance of stochastic collision dynamics in determining orbital stability. Although the model adopts several simplifying assumptions, it reproduces the fundamental feedback mechanism underlying the Kessler hypothesis and provides a computationally efficient framework for investigating the probabilistic onset of orbital debris cascades.",
   "author": "Ayush Samanta",
   "date": "2026-06-26",
   "thumbnail": "https://zenodo.org/api/iiif/record:22638541:Kessler%20Syndrome%20Density%20Threshold%20(1).pdf/full/%5E1200,/0/default.jpg",
@@ -19,5 +19,5 @@
     "rights": "",
     "copyright": ""
   },
-  "software": { "repositoryUrl": null, "programmingLanguages": "", "developmentStatus": "" }
+  "software": { "repositoryUrl": "https://github.com/Bloho/kessler-threshold", "programmingLanguages": "", "developmentStatus": "" }
 }

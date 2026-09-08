@@ -1,7 +1,7 @@
 {
   "draft": false,
   "title": "Finite-Time Transport Boundaries and Family-Constrained Robustness in the Earth–Moon CR3BP",
-  "summary": "This preprint investigates finite-time transport boundaries in the Earth–Moon circular restricted three-body problem, evaluating whether distance to an outcome-change boundary can measure transport robustness for a family of invariant-manifold initial conditions.",
+  "summary": "Finite-time transport in the circular restricted three-body problem (CR3BP) can change qualitatively under perturbations to initial conditions, making robustness difficult to characterize using smooth trajectory sensitivities alone. This work investigates whether geometric distance to an outcome-change boundary can provide a usefulmeasure of transport robustness for a two dimensional family of invariant-manifold seeds generated from planar L1 Lyapunov orbits in the Earth—Moon CR3BP. A 160 × 33 parameter atlas comprising 5280 initial conditions was classified by first-passage outcome, and adaptive refinement produced 484 numerical samples of the resultingoutcome boundaries. To avoid arbitrary Euclidean distance in the family parameters, the seed-state map was used to induce a local pullback metric, defining a family-constrained boundary-distance diagnostic ρη. The metric construction was numerically consistent, and ρη revealed strongly nonuniform proximity to the resolved transportinterfaces. Its ordering, however, depended on the prescribed state weighting, with Spearman correlations ranging from approximately 0.794 to 0.999 across the tested metrics. Direct perturbation tests also rejected a guaranteed-radius interpretation: one outcome change occurred at approximately 0.5ρη, while finite directional searches at five representative points recovered no independent minimum flip distance. These results support ρη as a family- constrained geometric diagnostic of proximity to resolved finite-time outcome boundaries, but not as a certifiedoutcome-preserving radius or validated transport condition number. A stronger robustness measure requires converged boundary resolution, physically specified uncertainty geometry, and direct computation of minimum outcome-changing perturbations.",
   "author": "Ayush Samanta and Bloho Labs",
   "date": "2026-09-07",
   "thumbnail": "https://zenodo.org/api/iiif/record:22648743:Samanta_2026_Finite-Time_Transport_Boundaries.pdf/full/%5E1200,/0/default.jpg",
@@ -9,19 +9,19 @@
   "fund": "Bloho Labs",
   "orcid": null,
   "zenodo": "https://zenodo.org/records/22648743",
-  "vixra": null,
+  "vixra": "https://vixra.org/abs/2609.0014",
   "order": 0,
   "details": {
     "resourceType": "Preprint",
     "publisher": "",
     "languages": "English",
     "identifiers": ["10.5281/zenodo.22648743"],
-    "rights": "",
-    "copyright": ""
+    "rights": "Creative Commons Attribution 4.0 International",
+    "copyright": "© 2026 Ayush Samanta. Published by Bloho Labs"
   },
   "software": {
-    "repositoryUrl": null,
-    "programmingLanguages": "",
-    "developmentStatus": ""
+    "repositoryUrl": "https://github.com/Bloho/transport-lab",
+    "programmingLanguages": "Python",
+    "developmentStatus": "Active"
   }
 }

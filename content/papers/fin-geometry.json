@@ -1,7 +1,7 @@
 {
   "draft": false,
   "title": "Parametric Analysis of Fin Geometry Effects on Stability and Performance of a Model Rocket",
-  "summary": "A simulation study of how fin geometry affects rocket stability and flight performance, identifying tradeoffs between stability margin and aerodynamic losses.",
+  "summary": "Fin geometry plays a critical role in determining the aerodynamic stability andperformance of rockets, yet excessive fin area may reduce efficiency through added drag. In this study I investigated the effect of fin geometry on rocket flight characteristics using ten simulated variants analyzed in OpenRocket under controlled launch conditions with four wind levels in a hypothetical situation where we are in Guadalajara, Spain. Metrics including apogee altitude, maximum velocity, acceleration, and time to apogee were compared across designs, revealing measurable tradeoffs between stability margin and ascent performance. The results indicate that moderate fin configurations can outperform both oversized and undersized designs by balancing stability with reduced aerodynamic losses.",
   "author": "Ayush Samanta",
   "date": "2026-04-28",
   "thumbnail": null,
@@ -12,11 +12,11 @@
   "vixra": "https://vixra.org/abs/2604.0112",
   "details": {
     "resourceType": "Preprint",
-    "publisher": "",
+    "publisher": "Bloho Labs",
     "languages": "English",
     "identifiers": ["viXra:2604.0112"],
     "rights": "",
     "copyright": ""
   },
-  "software": { "repositoryUrl": null, "programmingLanguages": "", "developmentStatus": "" }
+  "software": { "repositoryUrl": "https://github.com/Bloho/fin-geometry", "programmingLanguages": "Java (OpenRocket)", "developmentStatus": "Completed" }
 }
